@@ -1,0 +1,15 @@
+C:\Users\Vdovy\source\repos\lab3KPZ\Task6\bin\Debug\net5.0\Task6.exe
+C:\Users\Vdovy\source\repos\lab3KPZ\Task6\bin\Debug\net5.0\Task6.deps.json
+C:\Users\Vdovy\source\repos\lab3KPZ\Task6\bin\Debug\net5.0\Task6.runtimeconfig.json
+C:\Users\Vdovy\source\repos\lab3KPZ\Task6\bin\Debug\net5.0\Task6.runtimeconfig.dev.json
+C:\Users\Vdovy\source\repos\lab3KPZ\Task6\bin\Debug\net5.0\Task6.dll
+C:\Users\Vdovy\source\repos\lab3KPZ\Task6\bin\Debug\net5.0\ref\Task6.dll
+C:\Users\Vdovy\source\repos\lab3KPZ\Task6\bin\Debug\net5.0\Task6.pdb
+C:\Users\Vdovy\source\repos\lab3KPZ\Task6\obj\Debug\net5.0\Task6.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Vdovy\source\repos\lab3KPZ\Task6\obj\Debug\net5.0\Task6.AssemblyInfoInputs.cache
+C:\Users\Vdovy\source\repos\lab3KPZ\Task6\obj\Debug\net5.0\Task6.AssemblyInfo.cs
+C:\Users\Vdovy\source\repos\lab3KPZ\Task6\obj\Debug\net5.0\Task6.csproj.CoreCompileInputs.cache
+C:\Users\Vdovy\source\repos\lab3KPZ\Task6\obj\Debug\net5.0\Task6.dll
+C:\Users\Vdovy\source\repos\lab3KPZ\Task6\obj\Debug\net5.0\ref\Task6.dll
+C:\Users\Vdovy\source\repos\lab3KPZ\Task6\obj\Debug\net5.0\Task6.pdb
+C:\Users\Vdovy\source\repos\lab3KPZ\Task6\obj\Debug\net5.0\Task6.genruntimeconfig.cache

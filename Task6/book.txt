@@ -1,0 +1,7 @@
+The Great Story
+Short title
+ Another thought begins here with indentation
+This is a normal paragraph that is definitely longer than twenty characters
+Tiny line
+ Another indented quote
+Yet another paragraph that should be wrapped into a p tag properly
