@@ -17,6 +17,11 @@
             return text;
         }
 
+        public override void Accept(ILightNodeVisitor visitor)
+        {
+            visitor.VisitText(this);
+        }
+
         protected override string BuildOuterHTML()
         {
             OnTextRendered();

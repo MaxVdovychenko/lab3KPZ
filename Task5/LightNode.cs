@@ -27,6 +27,8 @@ namespace Task5
             return string.Empty;
         }
 
+        public abstract void Accept(ILightNodeVisitor visitor);
+
         protected abstract string BuildOuterHTML();
 
         protected virtual void BeforeRender()

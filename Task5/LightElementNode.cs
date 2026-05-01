@@ -15,10 +15,8 @@ namespace Task5
         Pair
     }
 
-
     public class LightElementNode : LightNode
     {
-
         private readonly string tagName;
         private readonly DisplayType displayType;
         private readonly ClosingType closingType;
@@ -39,16 +37,11 @@ namespace Task5
             this.displayType = displayType;
             this.closingType = closingType;
             OnCreated();
-
-        }
-        public IHtmlTreeIterator CreateDepthFirstIterator()
-        {
-            return new DepthFirstHtmlIterator(this);
         }
 
-        public IHtmlTreeIterator CreateBreadthFirstIterator()
+        public override void Accept(ILightNodeVisitor visitor)
         {
-            return new BreadthFirstHtmlIterator(this);
+            visitor.VisitElement(this);
         }
 
         public void AddClass(string className)
@@ -138,6 +131,15 @@ namespace Task5
             sb.Append("</").Append(tagName).Append('>');
             return sb.ToString();
         }
-    }
 
+        public IHtmlTreeIterator CreateDepthFirstIterator()
+        {
+            return new DepthFirstHtmlIterator(this);
+        }
+
+        public IHtmlTreeIterator CreateBreadthFirstIterator()
+        {
+            return new BreadthFirstHtmlIterator(this);
+        }
+    }
 }
