@@ -15,8 +15,10 @@ namespace Task5
         Pair
     }
 
+
     public class LightElementNode : LightNode
     {
+
         private readonly string tagName;
         private readonly DisplayType displayType;
         private readonly ClosingType closingType;
@@ -37,6 +39,16 @@ namespace Task5
             this.displayType = displayType;
             this.closingType = closingType;
             OnCreated();
+
+        }
+        public IHtmlTreeIterator CreateDepthFirstIterator()
+        {
+            return new DepthFirstHtmlIterator(this);
+        }
+
+        public IHtmlTreeIterator CreateBreadthFirstIterator()
+        {
+            return new BreadthFirstHtmlIterator(this);
         }
 
         public void AddClass(string className)
@@ -127,4 +139,5 @@ namespace Task5
             return sb.ToString();
         }
     }
+
 }
