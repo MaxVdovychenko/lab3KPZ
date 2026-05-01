@@ -13,3 +13,4 @@ C:\Users\Vdovy\source\repos\lab3KPZ\Task5\obj\Debug\net5.0\Task5.dll
 C:\Users\Vdovy\source\repos\lab3KPZ\Task5\obj\Debug\net5.0\ref\Task5.dll
 C:\Users\Vdovy\source\repos\lab3KPZ\Task5\obj\Debug\net5.0\Task5.pdb
 C:\Users\Vdovy\source\repos\lab3KPZ\Task5\obj\Debug\net5.0\Task5.genruntimeconfig.cache
+C:\Users\Vdovy\source\repos\lab3KPZ\Task5\obj\Debug\net5.0\Task5.csproj.AssemblyReference.cache

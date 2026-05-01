@@ -2,20 +2,24 @@
 {
     public class LightTextNode : LightNode
     {
-        private string text;
+        private readonly string text;
+
+        public string Text => text;
 
         public LightTextNode(string text)
         {
             this.text = text;
-        }
-
-        public override string OuterHTML()
-        {
-            return text;
+            OnCreated();
         }
 
         public override string InnerHTML()
         {
+            return text;
+        }
+
+        protected override string BuildOuterHTML()
+        {
+            OnTextRendered();
             return text;
         }
     }
