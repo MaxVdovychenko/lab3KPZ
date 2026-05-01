@@ -44,6 +44,15 @@ namespace Task5
             }
 
             Console.WriteLine();
+            var stats = new HtmlStatisticsVisitor();
+            ul.Accept(stats);
+            Console.WriteLine(stats);
+
+            var tags = new TagCollectorVisitor();
+            ul.Accept(tags);
+            Console.WriteLine("Tags: " + string.Join(", ", tags.Tags));
+
+            Console.WriteLine();
             Console.WriteLine("UL log: " + string.Join(" | ", ul.LifecycleLog));
             Console.WriteLine("LI1 log: " + string.Join(" | ", li1.LifecycleLog));
             Console.WriteLine("TEXT log: " + string.Join(" | ", ((LightTextNode)li1.Children[0]).LifecycleLog));
