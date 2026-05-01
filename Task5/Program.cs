@@ -6,71 +6,35 @@ namespace Task5
     {
         static void Main(string[] args)
         {
-            var ul = new LightElementNode("ul", DisplayType.Block, ClosingType.Pair);
-            ul.SetStyles("list-style: none; padding: 0;");
+            var editor = new HtmlEditor();
 
-            var li1 = new LightElementNode("li", DisplayType.Block, ClosingType.Pair);
-            li1.AddClass("item");
-            li1.AddChild(new LightTextNode("Item 1"));
+            var article = new LightElementNode("article", DisplayType.Block, ClosingType.Pair);
+            var title = new LightElementNode("h1", DisplayType.Block, ClosingType.Pair);
+            title.AddChild(new LightTextNode("Command Pattern Demo"));
 
-            var li2 = new LightElementNode("li", DisplayType.Block, ClosingType.Pair);
-            var strong = new LightElementNode("strong", DisplayType.Inline, ClosingType.Pair);
-            strong.AddChild(new LightTextNode("Item 2"));
-            li2.AddChild(strong);
+            var paragraph = new LightElementNode("p", DisplayType.Block, ClosingType.Pair);
+            paragraph.AddChild(new LightTextNode("This tree is edited through commands."));
 
-            var li3 = new LightElementNode("li", DisplayType.Block, ClosingType.Pair);
-            li3.AddChild(new LightTextNode("Item 3"));
+            editor.Execute(new AddClassCommand(article, "post"));
+            editor.Execute(new SetStylesCommand(article, "padding: 12px; border: 1px solid #ccc;"));
+            editor.Execute(new AddChildCommand(article, title));
+            editor.Execute(new AddChildCommand(article, paragraph));
 
-            ul.AddChild(li1);
-            ul.AddChild(li2);
-            ul.AddChild(li3);
+            Console.WriteLine("After commands:");
+            Console.WriteLine(article.OuterHTML());
+            Console.WriteLine("History count: " + editor.HistoryCount);
 
-            Console.WriteLine(ul.OuterHTML());
+            editor.UndoLast();
             Console.WriteLine();
+            Console.WriteLine("After one undo:");
+            Console.WriteLine(article.OuterHTML());
+            Console.WriteLine("History count: " + editor.HistoryCount);
 
-            Console.WriteLine("Depth-first traversal:");
-            IHtmlTreeIterator dfs = ul.CreateDepthFirstIterator();
-            while (dfs.MoveNext())
-            {
-                Console.WriteLine(DescribeNode(dfs.Current));
-            }
-
+            editor.UndoLast();
             Console.WriteLine();
-            Console.WriteLine("Breadth-first traversal:");
-            IHtmlTreeIterator bfs = ul.CreateBreadthFirstIterator();
-            while (bfs.MoveNext())
-            {
-                Console.WriteLine(DescribeNode(bfs.Current));
-            }
-
-            Console.WriteLine();
-            var stats = new HtmlStatisticsVisitor();
-            ul.Accept(stats);
-            Console.WriteLine(stats);
-
-            var tags = new TagCollectorVisitor();
-            ul.Accept(tags);
-            Console.WriteLine("Tags: " + string.Join(", ", tags.Tags));
-
-            Console.WriteLine();
-            Console.WriteLine("UL log: " + string.Join(" | ", ul.LifecycleLog));
-            Console.WriteLine("LI1 log: " + string.Join(" | ", li1.LifecycleLog));
-            Console.WriteLine("TEXT log: " + string.Join(" | ", ((LightTextNode)li1.Children[0]).LifecycleLog));
-        }
-
-        private static string DescribeNode(LightNode node)
-        {
-            if (node is LightElementNode element)
-            {
-                return $"<{element.TagName}>";
-            }
-
-            if (node is LightTextNode textNode)
-            {
-                return $"\"{textNode.Text}\"";
-            }
-
-            return node.GetType().Name;
+            Console.WriteLine("After second undo:");
+            Console.WriteLine(article.OuterHTML());
+            Console.WriteLine("History count: " + editor.HistoryCount);
         }
     }
 }

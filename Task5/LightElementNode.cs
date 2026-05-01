@@ -27,6 +27,7 @@ namespace Task5
         public string TagName => tagName;
         public DisplayType DisplayType => displayType;
         public ClosingType ClosingType => closingType;
+        public string Styles => inlineStyles;
         public IReadOnlyList<string> Classes => classes.AsReadOnly();
         public IReadOnlyList<LightNode> Children => children.AsReadOnly();
         public int ChildCount => children.Count;
