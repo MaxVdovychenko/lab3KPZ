@@ -6,35 +6,134 @@ namespace Task5
     {
         static void Main(string[] args)
         {
+            var ul = new LightElementNode("ul", DisplayType.Block, ClosingType.Pair);
+            ul.SetStyles("list-style: none; padding: 0;");
+
+            var li1 = new LightElementNode("li", DisplayType.Block, ClosingType.Pair);
+            li1.AddClass("item");
+            li1.AddChild(new LightTextNode("Item 1"));
+
+            var li2 = new LightElementNode("li", DisplayType.Block, ClosingType.Pair);
+            var strong = new LightElementNode("strong", DisplayType.Inline, ClosingType.Pair);
+            strong.AddChild(new LightTextNode("Item 2"));
+            li2.AddChild(strong);
+
+            var li3 = new LightElementNode("li", DisplayType.Block, ClosingType.Pair);
+            li3.AddChild(new LightTextNode("Item 3"));
+
+            ul.AddChild(li1);
+            ul.AddChild(li2);
+            ul.AddChild(li3);
+
+            Console.WriteLine("HTML:");
+            Console.WriteLine(ul.OuterHTML());
+
+            Console.WriteLine();
+            Console.WriteLine("Depth-first traversal:");
+
+            IHtmlTreeIterator dfs = ul.CreateDepthFirstIterator();
+            while (dfs.MoveNext())
+            {
+                Console.WriteLine(DescribeNode(dfs.Current));
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("Breadth-first traversal:");
+
+            IHtmlTreeIterator bfs = ul.CreateBreadthFirstIterator();
+            while (bfs.MoveNext())
+            {
+                Console.WriteLine(DescribeNode(bfs.Current));
+            }
+
+            Console.WriteLine();
+            var stats = new HtmlStatisticsVisitor();
+            ul.Accept(stats);
+
+            Console.WriteLine("Visitor statistics:");
+            Console.WriteLine(stats);
+
+            var tags = new TagCollectorVisitor();
+            ul.Accept(tags);
+
+            Console.WriteLine("Collected tags:");
+            Console.WriteLine(string.Join(", ", tags.Tags));
+
+            Console.WriteLine();
+            Console.WriteLine("Command pattern demo:");
+
             var editor = new HtmlEditor();
-
-            var article = new LightElementNode("article", DisplayType.Block, ClosingType.Pair);
-            var title = new LightElementNode("h1", DisplayType.Block, ClosingType.Pair);
-            title.AddChild(new LightTextNode("Command Pattern Demo"));
-
-            var paragraph = new LightElementNode("p", DisplayType.Block, ClosingType.Pair);
-            paragraph.AddChild(new LightTextNode("This tree is edited through commands."));
-
-            editor.Execute(new AddClassCommand(article, "post"));
-            editor.Execute(new SetStylesCommand(article, "padding: 12px; border: 1px solid #ccc;"));
-            editor.Execute(new AddChildCommand(article, title));
-            editor.Execute(new AddChildCommand(article, paragraph));
+            editor.Execute(new AddClassCommand(ul, "menu"));
+            editor.Execute(new SetStylesCommand(ul, "background: lightgray; padding: 10px;"));
 
             Console.WriteLine("After commands:");
-            Console.WriteLine(article.OuterHTML());
-            Console.WriteLine("History count: " + editor.HistoryCount);
+            Console.WriteLine(ul.OuterHTML());
 
             editor.UndoLast();
-            Console.WriteLine();
-            Console.WriteLine("After one undo:");
-            Console.WriteLine(article.OuterHTML());
-            Console.WriteLine("History count: " + editor.HistoryCount);
 
-            editor.UndoLast();
             Console.WriteLine();
-            Console.WriteLine("After second undo:");
+            Console.WriteLine("After undo:");
+            Console.WriteLine(ul.OuterHTML());
+
+            Console.WriteLine();
+            Console.WriteLine("State pattern demo:");
+
+            var article = new LightElementNode("article", DisplayType.Block, ClosingType.Pair);
+            article.AddClass("draft-article");
+            article.AddChild(new LightTextNode("This content is editable while in draft state."));
+
+            Console.WriteLine("State before publish: " + article.CurrentStateName);
             Console.WriteLine(article.OuterHTML());
-            Console.WriteLine("History count: " + editor.HistoryCount);
+
+            article.Publish();
+
+            Console.WriteLine("State after publish: " + article.CurrentStateName);
+
+            try
+            {
+                article.AddChild(new LightTextNode("This should not be allowed."));
+            }
+            catch (InvalidOperationException ex)
+            {
+                Console.WriteLine("Blocked mutation: " + ex.Message);
+            }
+
+            try
+            {
+                article.AddClass("locked");
+            }
+            catch (InvalidOperationException ex)
+            {
+                Console.WriteLine("Blocked mutation: " + ex.Message);
+            }
+
+            article.Reopen();
+            article.AddClass("editable-again");
+            article.AddChild(new LightTextNode("This works again after reopening."));
+
+            Console.WriteLine("State after reopen: " + article.CurrentStateName);
+            Console.WriteLine(article.OuterHTML());
+
+            Console.WriteLine();
+            Console.WriteLine("Lifecycle logs:");
+            Console.WriteLine("UL log: " + string.Join(" | ", ul.LifecycleLog));
+            Console.WriteLine("LI1 log: " + string.Join(" | ", li1.LifecycleLog));
+            Console.WriteLine("TEXT log: " + string.Join(" | ", ((LightTextNode)li1.Children[0]).LifecycleLog));
+        }
+
+        private static string DescribeNode(LightNode node)
+        {
+            if (node is LightElementNode element)
+            {
+                return $"<{element.TagName}>";
+            }
+
+            if (node is LightTextNode textNode)
+            {
+                return $"\"{textNode.Text}\"";
+            }
+
+            return node.GetType().Name;
         }
     }
 }
